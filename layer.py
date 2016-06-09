@@ -9,6 +9,7 @@ from yowsup.layers.protocol_media.mediauploader import MediaUploader
 from PIL import Image
 import time
 import os
+import sys
 import random
 import wikipedia
 
@@ -86,7 +87,7 @@ class EchoLayer(YowInterfaceLayer):
     
 
         if True:
-                        
+            msgText = msgText.encode('utf8')           
             if 'Hi' in msgText:
                 print 'hii from rk'
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Newbie' + " " +
@@ -105,6 +106,20 @@ class EchoLayer(YowInterfaceLayer):
                                                                        msgText,
                                                                        to = msgFrom)
 		self.toLower(outgoingMessageProtocolEntity)
+		
+	    elif 'wiki' in msgText:
+		wikipedia.set_lang("ta")
+		modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+		jid = self.normalizeJid(msgFrom)
+		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
+                self.toLower(entity)
+                print 'This is Wiki App'
+                
+		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Wiki Details:' + "  " +
+                                                                       modwiki,
+                                                                       to = msgFrom)
+		self.toLower(outgoingMessageProtocolEntity)
+		
 	    elif 'cool' in msgText or 'Cool' in msgText :
                 #Generating random Img from Folder 
                 jid = self.normalizeJid(msgFrom)
@@ -132,7 +147,7 @@ class EchoLayer(YowInterfaceLayer):
                  
 
                  
-        print("Message:%s|From:%s|Time:%s|" % (messageProtocolEntity.getBody(),
+        print("Message:%s|From:%s|Time:%s|" % (msgText,
                                                messageProtocolEntity.getFrom(False),
                                                time.ctime()))
         
