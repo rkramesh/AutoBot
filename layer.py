@@ -109,11 +109,21 @@ class EchoLayer(YowInterfaceLayer):
 		
 	    elif 'wiki' in msgText:
 		wikipedia.set_lang("ta")
-		modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+		#modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
 		jid = self.normalizeJid(msgFrom)
 		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
                 self.toLower(entity)
                 print 'This is Wiki App'
+		try:
+		    modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+	        except ValueError:
+		    modwiki = 'Sorry value erroe Page not Found!..Please try with different search term'
+						
+		except wikipedia.exceptions.PageError:
+		    modwiki = 'Sorry Page not Found!..Please try with different search term'
+		except wikipedia.exceptions.DisambiguationError as e:
+		    # print (e.options)# this will print 
+		    modwiki = 'Multiple results found for '+msgText+'..Add more keywords..ex:'+msgText+' name'
                 
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Wiki Details:' + "  " +
                                                                        modwiki,
