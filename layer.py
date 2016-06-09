@@ -87,7 +87,7 @@ class EchoLayer(YowInterfaceLayer):
     
 
         if True:
-            msgText = msgText.encode('utf8')           
+            #msgText = msgText.encode('utf8')           
             if 'Hi' in msgText:
                 print 'hii from rk'
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Newbie' + " " +
@@ -108,22 +108,36 @@ class EchoLayer(YowInterfaceLayer):
 		self.toLower(outgoingMessageProtocolEntity)
 		
 	    elif 'wiki' in msgText:
-		wikipedia.set_lang("ta")
-		#modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
-		jid = self.normalizeJid(msgFrom)
-		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
-                self.toLower(entity)
-                print 'This is Wiki App'
-		try:
+                #wikipedia.set_lang('ta')
+                splitted = msgText.split()
+                if splitted[1] == 'set-lang':         
+                    try:
+                        wikipedia.set_lang(splitted[2])
+                        modwiki = 'Wiki language Changed to '+ splitted[2]
+                    except:
+                        modwiki = 'Unable to Set Language'
+                    
+                    
+		elif splitted[1] != 'set-lang':
+                    
+		
 		    modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
-	        except ValueError:
-		    modwiki = 'Sorry value erroe Page not Found!..Please try with different search term'
-						
-		except wikipedia.exceptions.PageError:
-		    modwiki = 'Sorry Page not Found!..Please try with different search term'
-		except wikipedia.exceptions.DisambiguationError as e:
-		    # print (e.options)# this will print 
-		    modwiki = 'Multiple results found for '+msgText+'..Add more keywords..ex:'+msgText+' name'
+                    jid = self.normalizeJid(msgFrom)
+                    entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
+                    self.toLower(entity)
+                    print 'This is Wiki App'
+                    try:
+                        modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+                    except ValueError:
+                        modwiki = 'Sorry value erroe Page not Found!..Please try with different search term'
+                                                    
+                    except wikipedia.exceptions.PageError:
+                        modwiki = 'Sorry Page not Found!..Please try with different search term'
+                    except wikipedia.exceptions.DisambiguationError as e:
+                        # print (e.options)# this will print 
+                        modwiki = 'Multiple results found for '+msgText+'..Add more keywords..ex:'+msgText+' name'
+                    except:
+                        modwiki = 'Unknown Error Check with Rk'
                 
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Wiki Details:' + "  " +
                                                                        modwiki,
