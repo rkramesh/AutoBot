@@ -13,7 +13,6 @@ import sys
 import random
 import wikipedia
 
-
 class EchoLayer(YowInterfaceLayer):
 
     def normalizeJid(self, number):
@@ -30,7 +29,6 @@ class EchoLayer(YowInterfaceLayer):
 
 
     ##
-
     def onRequestUploadResult(self, resultRequestUploadIqProtocolEntity, requestUploadIqProtocolEntity, jid, path, oup):
         print("Request ok")
         #duplicate image will provide json data not found Exception error
