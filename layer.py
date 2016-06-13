@@ -103,7 +103,7 @@ class EchoLayer(YowInterfaceLayer):
                 textMsg = 'Hello Boss.. :)'
 	    elif msgText == 'wiki' or msgText == 'Wiki':
                 textMsg = 'Wiki Details:'
-                modwiki = 'Add a word after wiki to get details.Ex: wiki cool'                
+                modwiki = 'Add a word after wiki to get details.Ex: wiki eagle'                
 	    elif 'wiki' in msgText or 'Wiki' in msgText:
                 textMsg = 'Wiki Details:'
                 #wikipedia.set_lang('ta')
