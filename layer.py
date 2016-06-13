@@ -78,19 +78,19 @@ class EchoLayer(YowInterfaceLayer):
         #self.onTextMessage(messageProtocolEntity)
          
         msgFrom = messageProtocolEntity.getFrom()
-        msgText = messageProtocolEntity.getBody()
+        msgText = messageProtocolEntity.getBody().lower()
         msgType = messageProtocolEntity.getType()
 	jid = self.normalizeJid(msgFrom)
 	textMsg = ' '
 	modwiki = ' '
         if True:
             #msgText = msgText.encode('utf8')           
-            if 'Hi' in msgText:
-                print 'hii from rk'
+            if msgText == 'hi':
+                print 'Hii from rk'
                 #textMsg = ' '
                 modwiki = 'Hii..Im Whatsapp Bot..Try me..'
                 
-	    elif 'Rk' in msgText:
+	    elif msgText == 'rk':
 		jid = self.normalizeJid(msgFrom)
 		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
                 self.toLower(entity)
@@ -99,10 +99,10 @@ class EchoLayer(YowInterfaceLayer):
                 #img.show()
                 #os.system("start C:\Windows\system32\cmd")
                 textMsg = 'Hello Boss.. :)'
-	    elif msgText == 'wiki' or msgText == 'Wiki':
+	    elif msgText == 'wiki':
                 textMsg = 'Wiki Details:'
-                modwiki = 'Add a word after wiki to get details.Ex: wiki eagle'                
-	    elif 'wiki' in msgText or 'Wiki' in msgText:
+                modwiki = 'Add a word after wiki to get details.Eg: wiki eagle'                
+	    elif 'wiki' in msgText:
                 textMsg = 'Wiki Details:'
                 #wikipedia.set_lang('ta')
                 splitted = msgText.split()
@@ -136,17 +136,17 @@ class EchoLayer(YowInterfaceLayer):
                 else:
                     modwiki ='Add a word after wiki to get details.Ex: wiki cool'
                 
-	    elif 'check' in msgText or 'Check' in msgText :
+	    elif msgText == 'kabali':
                 #Generating random Img from Folder 
                 #jid = self.normalizeJid(msgFrom)
-                filec =  r"C:\Users\radhakrishnanr\Desktop\img"
+                filec =  r"C:\Users\radhakrishnanr\Desktop\kabali"
                 random_filename = random.choice([
                     x for x in os.listdir(filec)
                     if os.path.isfile(os.path.join(filec, x))
                 ])
                 
-                path = 'C:/Users/radhakrishnanr/Desktop/img/'+random_filename
-                textMsg = 'Image:'+random_filename+' Uploaded'
+                path = 'C:/Users/radhakrishnanr/Desktop/kabali/'+random_filename
+                textMsg = 'Uploading kabali Image....'
                 iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                      filePath=path)
                 uploadOk = lambda successEntity, originalEntity: \
@@ -154,10 +154,16 @@ class EchoLayer(YowInterfaceLayer):
                 self._sendIq(iqEntity, uploadOk, self.onRequestUploadError)
                 
 
-                
+               
             else:
+                  
                   print 'python message'
-                  textMsg = 'Auto Reply:'+msgText
+                  textMsg = 'Auto Reply:'+messageProtocolEntity.getBody()
+                  msgFrom = '91999990099999999999900900'#disable Auto Reply
+
+            
+                  
+                  
                   
             outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
                                                                             modwiki,   
@@ -176,6 +182,26 @@ class EchoLayer(YowInterfaceLayer):
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
         self.toLower(outgoingMessageProtocolEntity)
+        '''
+    elif messageProtocolEntity.getType() == 'audio': 
+        print "Audio received"
+        outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Audio Not Suppported' + " " +
+                                                                       time.ctime(),
+                                                                       to = messageProtocolEntity.getFrom())
+        self.toLower(outgoingMessageProtocolEntity)
+
+        
+    elif messageProtocolEntity.getType() == 'vcard': 
+        print "vcard received"
+        outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'vcard Not Suppported' + " " +
+                                                                       time.ctime(),
+                                                                       to = messageProtocolEntity.getFrom())
+        self.toLower(outgoingMessageProtocolEntity)
+
+        '''
+
+
+    
 
 
      
