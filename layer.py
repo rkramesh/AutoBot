@@ -83,6 +83,8 @@ class EchoLayer(YowInterfaceLayer):
         msgText = messageProtocolEntity.getBody()
         msgType = messageProtocolEntity.getType()
 	jid = self.normalizeJid(msgFrom)
+	textMsg = ' '
+	modwiki = ' '
         
     
 
@@ -90,10 +92,14 @@ class EchoLayer(YowInterfaceLayer):
             #msgText = msgText.encode('utf8')           
             if 'Hi' in msgText:
                 print 'hii from rk'
+                #textMsg = ' '
+                modwiki = 'Hii..Im Whatsapp Bot..Try me..'
+                '''
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Newbie' + " " +
                                                                             msgText,   
                                                                             to = msgFrom)
 		self.toLower(outgoingMessageProtocolEntity)
+		'''
 	    elif 'Rk' in msgText:
 		jid = self.normalizeJid(msgFrom)
 		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
@@ -102,12 +108,26 @@ class EchoLayer(YowInterfaceLayer):
                 #img = Image.open('rk.jpg')
                 #img.show()
                 #os.system("start C:\Windows\system32\cmd")
+                textMsg = 'Hello Boss.. :)'
+               #modwiki = ' '
+                '''
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Hello Boss' + "  " +
                                                                        msgText,
                                                                        to = msgFrom)
 		self.toLower(outgoingMessageProtocolEntity)
+		'''
+	    elif msgText == 'wiki' or msgText == 'Wiki':
+                textMsg = 'Wiki Details:'
+                modwiki = 'Add a word after wiki to get details.Ex: wiki cool'
+                '''
+                outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Wiki Details' + "  " +
+                                                                       modwiki,
+                                                                       to = msgFrom)
+		self.toLower(outgoingMessageProtocolEntity)
+                '''
 		
-	    elif 'wiki' in msgText:
+	    elif 'wiki' in msgText or 'Wiki' in msgText:
+                textMsg = 'Wiki Details:'
                 #wikipedia.set_lang('ta')
                 splitted = msgText.split()
                 if splitted[1] == 'set-lang':         
@@ -116,15 +136,17 @@ class EchoLayer(YowInterfaceLayer):
                         modwiki = 'Wiki language Changed to '+ splitted[2]
                     except:
                         modwiki = 'Unable to Set Language'
-                    
-                    
+                elif splitted[1] == ' ':
+                    modwiki ='Add a word after wiki to get details.Ex: wiki cool'
+                     
 		elif splitted[1] != 'set-lang':
                     
 		
-		    modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+		    #modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
                     jid = self.normalizeJid(msgFrom)
                     entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
                     self.toLower(entity)
+                    
                     print 'This is Wiki App'
                     try:
                         modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
@@ -138,15 +160,20 @@ class EchoLayer(YowInterfaceLayer):
                         modwiki = 'Multiple results found for '+msgText+'..Add more keywords..ex:'+msgText+' name'
                     except:
                         modwiki = 'Unknown Error Check with Rk'
-                
+                else:
+                    modwiki ='Add a word after wiki to get details.Ex: wiki cool'
+                '''
 		outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Wiki Details:' + "  " +
                                                                        modwiki,
                                                                        to = msgFrom)
 		self.toLower(outgoingMessageProtocolEntity)
+		'''
+
 		
-	    elif 'cool' in msgText or 'Cool' in msgText :
+		
+	    elif 'check' in msgText or 'Check' in msgText :
                 #Generating random Img from Folder 
-                jid = self.normalizeJid(msgFrom)
+                #jid = self.normalizeJid(msgFrom)
                 filec =  r"C:\Users\radhakrishnanr\Desktop\img"
                 random_filename = random.choice([
                     x for x in os.listdir(filec)
@@ -154,6 +181,7 @@ class EchoLayer(YowInterfaceLayer):
                 ])
                 
                 path = 'C:/Users/radhakrishnanr/Desktop/img/'+random_filename
+                textMsg = 'Image:'+random_filename+' Uploaded'
                 iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                      filePath=path)
                 uploadOk = lambda successEntity, originalEntity: \
@@ -164,10 +192,19 @@ class EchoLayer(YowInterfaceLayer):
                 
             else:
                   print 'python message'
+                  textMsg = 'Auto Reply:'+msgText
+                  '''
                   outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'send from python' + "  " +
                                                                        msgText,
                                                                        to = msgFrom)
                   self.toLower(outgoingMessageProtocolEntity)
+                  '''
+
+            outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
+                                                                            modwiki,   
+                                                                            to = msgFrom)
+	    self.toLower(outgoingMessageProtocolEntity)
+            
                  
 
                  
