@@ -175,40 +175,46 @@ class EchoLayer(YowInterfaceLayer):
         print("Message:%s|From:%s|Time:%s|" % (msgText,
                                                messageProtocolEntity.getFrom(False),
                                                time.ctime()))
+
+        
+       
         
      elif messageProtocolEntity.getType() == 'media': 
         print "Media received"
-        outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Media Not Suppported' + " " +
+        try:
+            
+            outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Media Not Suppported' + " " +
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
-        self.toLower(outgoingMessageProtocolEntity)
+            self.toLower(outgoingMessageProtocolEntity)
+        except ValueError:
+            print 'audio not supported'
         '''
-    elif messageProtocolEntity.getType() == 'audio': 
+     elif message.getMediaType() == 'ptt': 
         print "Audio received"
         outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Audio Not Suppported' + " " +
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
         self.toLower(outgoingMessageProtocolEntity)
+        '''
 
         
-    elif messageProtocolEntity.getType() == 'vcard': 
+     elif messageProtocolEntity.getType() == 'vcard': 
         print "vcard received"
         outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'vcard Not Suppported' + " " +
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
         self.toLower(outgoingMessageProtocolEntity)
 
-        '''
-
-
-    
+            
 
 
      
      
      #send delivery receipt with time
      self.toLower(messageProtocolEntity.ack(True))
- 
+     
+     
     @ProtocolEntityCallback("receipt")
     def onReceipt(self, entity):
         ack = OutgoingAckProtocolEntity(entity.getId(), "receipt",entity.getType(), entity.getFrom())
