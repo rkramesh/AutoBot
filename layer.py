@@ -12,6 +12,8 @@ import os
 import sys
 import random
 import wikipedia
+import scp
+ypid= os.getpid()
 
 class EchoLayer(YowInterfaceLayer):
 
@@ -23,9 +25,33 @@ class EchoLayer(YowInterfaceLayer):
 
         return "%s@s.whatsapp.net" % number
     
+    
     def doSendImage(self,filePath,url,to,ip=None):
       entity=ImageDownloadableMediaMessageProtocolEntity.fromFilePath(filePath,url,ip,to)
       self.toLower(entity)
+
+    def audio_send(self, path):
+        
+        path = r"C:\Users\radhakrishnanr\Downloads\yowsup-master-jli\yowsup-master\yowsup\demos\Project\test.mp3"
+        entity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_AUDIO, filePath=path)
+        successFn = lambda successEntity, originalEntity: self.onRequestUploadResultAudio(jid, path, successEntity, originalEntity)
+        errorFn = lambda errorEntity, originalEntity: self.onRequestUploadError(jid, path, errorEntity, originalEntity)
+                                                                                    
+    def doSendAudio(self, filePath, url, mediaType, to, ip = None):
+        entity = DownloadableMediaMessageProtocolEntity.fromFilePath(filePath, url, mediaType, ip, to)
+        self.toLower(entity)
+    
+    def onRequestUploadResultAudio(self, jid, filePath, resultRequestUploadIqProtocolEntity, requestUploadIqProtocolEntity):
+        if resultRequestUploadIqProtocolEntity.isDuplicate():
+            self.doSendAudio(filePath, resultRequestUploadIqProtocolEntity.getUrl(), "audio", jid,
+                             resultRequestUploadIqProtocolEntity.getIp())
+        else:
+            mediaUploader = MediaUploader(jid, self.getOwnJid(), filePath,
+                                      resultRequestUploadIqProtocolEntity.getUrl(),
+                                      resultRequestUploadIqProtocolEntity.getResumeOffset(),
+                                      self.onUploadSuccessAudio, self.onUploadError, self.onUploadProgress, async=False)
+            mediaUploader.start()
+
 
 
     ##
@@ -50,6 +76,9 @@ class EchoLayer(YowInterfaceLayer):
 
     def onRequestUploadError(self, errorRequestUploadIqProtocolEntity, requestUploadIqProtocolEntity):
         print("Error requesting upload url")
+
+    def onUploadSuccessAudio(self, filePath, jid, url):
+        self.doSendAudio(filePath, url, "audio", jid)
 
     def onUploadSuccess(self, filePath, jid, url):
         #convenience method to detect file/image attributes for sending, requires existence of 'pillow' library
@@ -99,23 +128,24 @@ class EchoLayer(YowInterfaceLayer):
                 #img.show()
                 #os.system("start C:\Windows\system32\cmd")
                 textMsg = 'Hello Boss.. :)'
+                '''
 	    elif msgText == 'wiki':
                 textMsg = 'Wiki Details:'
-                modwiki = 'Add a word after wiki to get details.Eg: wiki eagle'                
+                modwiki = 'Add a word after wiki to get details.Eg: wiki eagle'
+                '''
 	    elif 'wiki' in msgText:
                 textMsg = 'Wiki Details:'
                 #wikipedia.set_lang('ta')
                 splitted = msgText.split()
-                if splitted[1] == 'set-lang':         
+                if msgText.split(' ')[1] == 'set-lang':         
                     try:
-                        wikipedia.set_lang(splitted[2])
-                        modwiki = 'Wiki language Changed to '+ splitted[2]
+                        wikipedia.set_lang(msgText.split(' ')[2])
+                        modwiki = 'Wiki language Changed to '+ msgText.split(' ')[2]
                     except:
                         modwiki = 'Unable to Set Language'
-                elif splitted[1] == ' ':
-                    modwiki ='Add a word after wiki to get details.Ex: wiki cool'
+                
                      
-		elif splitted[1] != 'set-lang':
+		elif msgText.split(' ')[1] != 'set-lang':
 		    #modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
                     jid = self.normalizeJid(msgFrom)
                     entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
@@ -125,12 +155,12 @@ class EchoLayer(YowInterfaceLayer):
                     try:
                         modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
                     except ValueError:
-                        modwiki = 'Sorry value erroe Page not Found!..Please try with different search term'
+                        modwiki = 'Sorry value error Page not Found!..Please try with different search term'
                     except wikipedia.exceptions.PageError:
                         modwiki = 'Sorry Page not Found!..Please try with different search term'
                     except wikipedia.exceptions.DisambiguationError as e:
                         # print (e.options)# this will print
-                        modwiki = ', '.join(e.options)
+                        modwiki = ', '.join(e.options).encode('utf-8')
                     except:
                         modwiki = 'Unknown Error Check with Rk'
                 else:
@@ -152,6 +182,27 @@ class EchoLayer(YowInterfaceLayer):
                 uploadOk = lambda successEntity, originalEntity: \
                    self.onRequestUploadResult(successEntity, originalEntity, jid, path, self.onUploadProgress)
                 self._sendIq(iqEntity, uploadOk, self.onRequestUploadError)
+                self.send
+                
+            elif 'amazon' in msgText:
+                textMsg = 'Amazon Details:'
+                
+                
+                if len(msgText.split()) > 1:
+                    modwiki = (scp.search(msgText.split(' ',1)[1]))
+                    os.remove('myfile.txt')
+                else:
+                     modwiki ='Add a word after Amazon to get details.Ex: Amazon bag'
+            elif messageProtocolEntity.getFrom(False) == '918122753538' and msgText == 'exit!':
+                 modwiki = 'kiiling bot..'
+                 os.kill(ypid, 9)
+                 
+            
+            
+            
+                    
+                    
+                
                 
 
                
@@ -172,7 +223,7 @@ class EchoLayer(YowInterfaceLayer):
                      
 
                  
-        print("Message:%s|From:%s|Time:%s|" % (msgText,
+        print("Message:%s|From:%s|Time:%s|" % (msgFrom,
                                                messageProtocolEntity.getFrom(False),
                                                time.ctime()))
 
