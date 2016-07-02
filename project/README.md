@@ -1,5 +1,5 @@
 # AutoBot
-Simple python Script to Send and Receive Meessage in whatsapp with Dictionary Mode Enabled
+Simple python Script to Send and Receive Meessage in whatsapp with Dictionary amd Amazon Price scrapper mode Enabled
 
 
 # Usage
