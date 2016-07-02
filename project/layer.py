@@ -193,7 +193,7 @@ class EchoLayer(YowInterfaceLayer):
                     os.remove('myfile.txt')
                 else:
                      modwiki ='Add a word after Amazon to get details.Ex: Amazon bag'
-            elif messageProtocolEntity.getFrom(False) == '918122753538' and msgText == 'exit!':
+            elif messageProtocolEntity.getFrom(False) == ' ' and msgText == 'exit!':
                  modwiki = 'kiiling bot..'
                  os.kill(ypid, 9)
                  
