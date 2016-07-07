@@ -196,26 +196,14 @@ class EchoLayer(YowInterfaceLayer):
             elif messageProtocolEntity.getFrom(False) == ' ' and msgText == 'exit!':
                  modwiki = 'kiiling bot..'
                  os.kill(ypid, 9)
-                 
-            
-            
-            
-                    
-                    
                 
-                
-
                
             else:
                   
                   print 'python message'
                   textMsg = 'Auto Reply:'+messageProtocolEntity.getBody()
                   msgFrom = '91999990099999999999900900'#disable Auto Reply
-
-            
-                  
-                  
-                  
+    
             outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
                                                                             modwiki,   
                                                                             to = msgFrom)
@@ -227,8 +215,6 @@ class EchoLayer(YowInterfaceLayer):
                                                messageProtocolEntity.getFrom(False),
                                                time.ctime()))
 
-        
-       
         
      elif messageProtocolEntity.getType() == 'media': 
         print "Media received"
@@ -257,10 +243,7 @@ class EchoLayer(YowInterfaceLayer):
                                                                        to = messageProtocolEntity.getFrom())
         self.toLower(outgoingMessageProtocolEntity)
 
-            
-
-
-     
+          
      
      #send delivery receipt with time
      self.toLower(messageProtocolEntity.ack(True))
