@@ -1,6 +1,6 @@
 # AutoBot
-Simple python Script to Send and Receive Meessage in whatsapp with Dictionary Mode Enabled
-Star My profile if you Like it!
+Simple python Script to Send and Receive Meessage in whatsapp with Dictionary Mode Enabled.
+- Star My profile if you Like it!
 
 
 # Usage
