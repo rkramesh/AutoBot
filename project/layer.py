@@ -14,7 +14,7 @@ import random
 import wikipedia
 import scp
 ypid= os.getpid()
-
+#this layer script is still under testing,some of the media functions would not work.wait for updates in audio and vcard
 class EchoLayer(YowInterfaceLayer):
 
     def normalizeJid(self, number):
