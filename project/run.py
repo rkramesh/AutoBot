@@ -1,4 +1,5 @@
 import sys
+sys.path.append("..")
 from cred import *
 from yowsup.stacks import  YowStackBuilder
 from layer import EchoLayer
