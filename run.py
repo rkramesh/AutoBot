@@ -1,6 +1,5 @@
 import sys
-sys.path.insert(0, 'C:/Users/radhakrishnanr/Downloads/yowsup-master-jli/yowsup-master')
-
+from credentials import *
 from yowsup.stacks import  YowStackBuilder
 from layer import EchoLayer
 from yowsup.layers.auth import AuthError
@@ -10,7 +9,7 @@ from yowsup.layers.network import YowNetworkLayer
 import logging
 logging.basicConfig(level=logging.DEBUG)
 
-credentials = ("Enter your mobile no", "Enter the Whatsappcode/Key=") # replace with your phone and password
+credentials = (phone, pw) # replace with your phone and password
 #CREDENTIALS = DemosArgParser._getCredentials()
 
 if __name__==  "__main__":
