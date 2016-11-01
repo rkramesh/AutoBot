@@ -7,8 +7,8 @@ from yowsup.layers.auth import AuthError
 from yowsup.layers import YowLayerEvent
 from yowsup.layers.network import YowNetworkLayer
 #from yowsup.env import YowsupEnv
-import logging
-logging.basicConfig(level=logging.DEBUG)
+#import logging
+#logging.basicConfig(level=logging.DEBUG)
 
 credentials = (phone, pw) # replace with your phone and password
 #CREDENTIALS = DemosArgParser._getCredentials()
