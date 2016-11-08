@@ -200,9 +200,9 @@ class EchoLayer(YowInterfaceLayer):
                
             else:
                   
-                  print 'python message'
-                  textMsg = 'Auto Reply:'+messageProtocolEntity.getBody()
-                  msgFrom = '91999990099999999999900900'#disable Auto Reply
+                  print 'Auto Reply Disabled'
+##                  textMsg = 'Auto Reply:'+messageProtocolEntity.getBody()
+##                  msgFrom = '91999990099999999999900900'#disable Auto Reply
     
             outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
                                                                             modwiki,   
