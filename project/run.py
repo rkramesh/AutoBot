@@ -1,6 +1,6 @@
 import sys
-sys.path.append("..")
-from cred import *
+sys.path.append("..")# keep the base yowsup directory accordingly
+from cred import * # create a new cred.py file with variabes phone(phoneno) and pw(password)
 from yowsup.stacks import  YowStackBuilder
 from layer import EchoLayer
 from yowsup.layers.auth import AuthError
