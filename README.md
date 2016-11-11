@@ -95,7 +95,3 @@ Yowsup -	Copyright (c) <2012> Tarek Galal <tare2.galal@gmail.com>
 	HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
 	CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
 	OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-## Usage
-what would you like to search for?  eg: 'men watch' 'menwatch'
-
-
