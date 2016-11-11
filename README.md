@@ -8,7 +8,7 @@ After Completing the Yowsup Installation run the layer.py and start send/receive
 
 
 # How to Use
-This is a development branch ,kindly use my below yowsup fork 
+If you get Audio Issues ,kindly use my below yowsup fork as base
 
 https://github.com/rkramesh/yowsup
 
