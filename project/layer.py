@@ -201,13 +201,15 @@ class EchoLayer(YowInterfaceLayer):
             else:
                   
                   print 'Auto Reply Disabled'
+                  msgFrom = 'nomsg'
 ##                  textMsg = 'Auto Reply:'+messageProtocolEntity.getBody()
 ##                  msgFrom = '91999990099999999999900900'#disable Auto Reply
-    
-            outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
+
+            if  msgFrom != 'nomsg':
+                outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
                                                                             modwiki,   
                                                                             to = msgFrom)
-	    self.toLower(outgoingMessageProtocolEntity)
+	        self.toLower(outgoingMessageProtocolEntity)
                      
 
                  
@@ -226,14 +228,14 @@ class EchoLayer(YowInterfaceLayer):
             self.toLower(outgoingMessageProtocolEntity)
         except ValueError:
             print 'audio not supported'
-        '''
+    
      elif message.getMediaType() == 'ptt': 
         print "Audio received"
         outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Audio Not Suppported' + " " +
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
         self.toLower(outgoingMessageProtocolEntity)
-        '''
+        
 
         
      elif messageProtocolEntity.getType() == 'vcard': 
