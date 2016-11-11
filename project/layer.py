@@ -193,7 +193,25 @@ class EchoLayer(YowInterfaceLayer):
                     os.remove('myfile.txt')
                 else:
                      modwiki ='Add a word after Amazon to get details.Ex: Amazon bag'
-            elif messageProtocolEntity.getFrom(False) == ' ' and msgText == 'exit!':
+                     
+            elif msgText == '/help':
+                print 'Sending Help Msg..'
+                textMsg = """ [HELP]
+- Commands
+/help - Show this message.
+*Hi* - Try this!
+wiki eagle - Gets Result from Wikipedia for search 'eagle'
+wiki set-lang ta - Set Search language for wiki eg: ta=tamil ,en=english
+Amazon Iphone - Fetched all displayed Prize and details for product 'Iphone'
+Rk - Try this !
+Kabali - Just Try typing 'Kabali' and see for yourself!!
+exit! - killing AutoBot
+"""
+              
+##                textMsg = ''
+                     
+                     
+            elif messageProtocolEntity.getFrom(False) == '918122753538' and msgText == 'exit!':
                  modwiki = 'kiiling bot..'
                  os.kill(ypid, 9)
                 
@@ -206,6 +224,7 @@ class EchoLayer(YowInterfaceLayer):
 ##                  msgFrom = '91999990099999999999900900'#disable Auto Reply
 
             if  msgFrom != 'nomsg':
+                
                 outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
                                                                             modwiki,   
                                                                             to = msgFrom)
