@@ -8,6 +8,9 @@ After Completing the Yowsup Installation run the layer.py and start send/receive
 
 
 # How to Use
+This is a development branch ,kindly use my below yowsup fork 
+
+https://github.com/rkramesh/yowsup
 
 ## About Yowsup
 Yowsup is a python library that allows you to login and use the WhatsApp(TM) service and provides you with all capabilities of an official WhatsApp(TM) client, allowing you to create a full-fledged custom WhatsApp(TM) client. Yowsup also comes with a cross platform command-line frontend called yowsup-cli which allows you to jump into connecting and using WhatsApp(TM) service directly from command line.
