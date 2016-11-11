@@ -116,9 +116,18 @@ class EchoLayer(YowInterfaceLayer):
             #msgText = msgText.encode('utf8')           
             if msgText == 'hi':
                 print 'Hii from rk'
-                #textMsg = ' '
-                modwiki = 'Hii..Im Whatsapp Bot..Try me..'
-                
+                textMsg = """ [AutoBot]
+_Hii.. Im AutoBot,Please try below commands_
+*/help* - Show this message.
+*Hi* - Try this!
+*wiki eagle* - Gets Result from Wikipedia for search 'eagle'
+*wiki set-lang ta* - Set Search language for wiki eg: ta=tamil ,en=english
+*Amazon Iphone* - Fetch Available Prize and details for product 'Iphone' from Amazon
+*Rk* - Try this !
+*Kabali* - Just Try typing 'Kabali' and see for yourself!!
+*exit!* - ``Killing AutoBot``
+"""
+                                
 	    elif msgText == 'rk':
 		jid = self.normalizeJid(msgFrom)
 		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
@@ -198,14 +207,14 @@ class EchoLayer(YowInterfaceLayer):
                 print 'Sending Help Msg..'
                 textMsg = """ [HELP]
 - Commands
-/help - Show this message.
+*/help* - Show this message.
 *Hi* - Try this!
-wiki eagle - Gets Result from Wikipedia for search 'eagle'
-wiki set-lang ta - Set Search language for wiki eg: ta=tamil ,en=english
-Amazon Iphone - Fetched all displayed Prize and details for product 'Iphone'
-Rk - Try this !
-Kabali - Just Try typing 'Kabali' and see for yourself!!
-exit! - killing AutoBot
+*wiki eagle* - Gets Result from Wikipedia for search 'eagle'
+*wiki set-lang ta* - Set Search language for wiki eg: ta=tamil ,en=english
+*Amazon Iphone* - Fetched all displayed Prize and details for product 'Iphone'
+*Rk* - Try this !
+*Kabali* - Just Try typing 'Kabali' and see for yourself!!
+*exit!* - killing AutoBot
 """
               
 ##                textMsg = ''
