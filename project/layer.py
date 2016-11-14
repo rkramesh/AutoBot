@@ -12,7 +12,7 @@ import os
 import sys
 import random
 import wikipedia
-import scp
+import scp,gdown
 ypid= os.getpid()
 import logging,config
 logging.basicConfig(stream=sys.stdout, level=config.logging_level, format=config.log_format)
@@ -189,6 +189,27 @@ _Hii.. Im AutoBot,Please try below commands_
                    self.onRequestUploadResult(successEntity, originalEntity, jid, path, self.onUploadProgress)
                 self._sendIq(iqEntity, uploadOk, self.onRequestUploadError)
                 self.send
+
+            elif 'gsearch' in msgText:
+                #Generating random Img from Folder 
+                #jid = self.normalizeJid(msgFrom)
+                
+                query=msgText.split(' ',1)[1]
+                if gdown.search(query):
+                    
+                    
+                    random_filename=query+".jpg"
+                    path = random_filename
+                    print path
+                    textMsg = 'Uploading '+query+' Image....'
+                    iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
+                                                         filePath=path)
+                    uploadOk = lambda successEntity, originalEntity: \
+                       self.onRequestUploadResult(successEntity, originalEntity, jid, path, self.onUploadProgress)
+                    self._sendIq(iqEntity, uploadOk, self.onRequestUploadError)
+                    self.send
+                else:
+                      modwiki='No Image found,Please try with different search term'
                 
             elif 'amazon' in msgText:
                 textMsg = 'Amazon Details:'
