@@ -6,7 +6,7 @@ from layer import EchoLayer
 from yowsup.layers.auth import AuthError
 from yowsup.layers import YowLayerEvent, YowParallelLayer
 from yowsup.layers.network import YowNetworkLayer
-from notification_layer import NotificationsLayer
+#from notification_layer import NotificationsLayer
 #from yowsup.env import YowsupEnv
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
