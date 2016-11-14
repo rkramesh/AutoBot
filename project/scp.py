@@ -100,6 +100,6 @@ def scrape(url):
 if __name__ == "__main__":
     
     
-    search_string = 'toymotor'
+    search_string = 'iphone'
     product_list = search(search_string)
     
