@@ -179,7 +179,9 @@ _Hii.. Im AutoBot,Please try below commands_
                     x for x in os.listdir(config.media_storage_path)
                     if os.path.isfile(os.path.join(config.media_storage_path, x))
                 ])
-                path = config.media_storage_path+random_filename
+                
+                path = config.media_storage_path+'/'+random_filename
+                print path
                 textMsg = 'Uploading kabali Image....'
                 iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                      filePath=path)
