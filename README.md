@@ -4,7 +4,7 @@ Simple python Script to Send and Receive Meessage in whatsapp with Dictionary Mo
 
 
 # Usage
-After Completing the Yowsup Installation run the layer.py and start send/receive messages
+After Completing the Yowsup Installation run the run.py and start send/receive messages
 
 
 # How to Use

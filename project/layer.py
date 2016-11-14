@@ -14,7 +14,8 @@ import random
 import wikipedia
 import scp
 ypid= os.getpid()
-#this layer script is still under testing,some of the media functions would not work.wait for updates in audio and vcard
+import logging,config
+logging.basicConfig(stream=sys.stdout, level=config.logging_level, format=config.log_format)
 class EchoLayer(YowInterfaceLayer):
 
     def normalizeJid(self, number):
@@ -54,9 +55,8 @@ class EchoLayer(YowInterfaceLayer):
 
 
 
-    ##
     def onRequestUploadResult(self, resultRequestUploadIqProtocolEntity, requestUploadIqProtocolEntity, jid, path, oup):
-        print("Request ok")
+        logging.info("Request ok")
         #duplicate image will provide json data not found Exception error
         if resultRequestUploadIqProtocolEntity.isDuplicate():
             self.doSendImage(path,resultRequestUploadIqProtocolEntity.getUrl(),jid,resultRequestUploadIqProtocolEntity.getIp())
@@ -64,7 +64,7 @@ class EchoLayer(YowInterfaceLayer):
                                       resultRequestUploadIqProtocolEntity.getUrl(),
                                       resultRequestUploadIqProtocolEntity.getResumeOffset(),
                                       self.onUploadSuccess, self.onUploadError, oup)
-            print("Duplicate Image found....")
+            logging.warning("Duplicate Image found....")
         else:
              #successFn = lambda filePath, jid, url: self.uploadOk(mediaType, filePath, url, jid, resultRequestUploadIqProtocolEntity.getIp(), caption)
              mediaUploader = MediaUploader(jid, self.getOwnJid(), path,
@@ -72,17 +72,17 @@ class EchoLayer(YowInterfaceLayer):
                                       resultRequestUploadIqProtocolEntity.getResumeOffset(),
                                       self.onUploadSuccess, self.onUploadError, oup)
         mediaUploader.start()
-        print("Request ok upload complete")
+        logging.info("Request ok upload complete")
 
     def onRequestUploadError(self, errorRequestUploadIqProtocolEntity, requestUploadIqProtocolEntity):
-        print("Error requesting upload url")
+        logging.info("Error requesting upload url")
 
     def onUploadSuccessAudio(self, filePath, jid, url):
         self.doSendAudio(filePath, url, "audio", jid)
 
     def onUploadSuccess(self, filePath, jid, url):
         #convenience method to detect file/image attributes for sending, requires existence of 'pillow' library
-        print("Upload success")
+        logging.info("Upload success")
         entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
         self.toLower(entity)
 	entity = ImageDownloadableMediaMessageProtocolEntity.fromFilePath(filePath, url, None, jid)
@@ -90,12 +90,12 @@ class EchoLayer(YowInterfaceLayer):
 		
 
     def onUploadError(self, filePath, jid, url):
-        print("Upload file failed!")
-        print(ImageDownloadableMediaMessageProtocolEntity.fromFilePath(filePath, url, None, jid))
+        logging.info("Upload file failed!")
+        logging.info(ImageDownloadableMediaMessageProtocolEntity.fromFilePath(filePath, url, None, jid))
 
     def onUploadProgress(self, filePath, jid, url, progress):
-        print("%s => %s, %d%% \r" % (os.path.basename(filePath), jid, progress))
-        print("Upload on  progress")
+        logging.info("%s => %s, %d%% \r" % (os.path.basename(filePath), jid, progress))
+        logging.info("Upload on  progress")
         
   ##
     @ProtocolEntityCallback("message")
@@ -115,27 +115,24 @@ class EchoLayer(YowInterfaceLayer):
         if True:
             #msgText = msgText.encode('utf8')           
             if msgText == 'hi':
-                print 'Hii from rk'
-                textMsg = """ [AutoBot]
+                logging.info ('Hii from rk')
+                textMsg = """ [*AutoBot*]
 _Hii.. Im AutoBot,Please try below commands_
-*/help* - Show this message.
-*Hi* - Try this!
-*wiki eagle* - Gets Result from Wikipedia for search 'eagle'
-*wiki set-lang ta* - Set Search language for wiki eg: ta=tamil ,en=english
-*Amazon Iphone* - Fetch Available Prize and details for product 'Iphone' from Amazon
-*Rk* - Try this !
-*Kabali* - Just Try typing 'Kabali' and see for yourself!!
-*exit!* - ``Killing AutoBot``
+*Hi* -Try this!
+*wiki eagle* -Get result from Wikipedia
+*wiki set-lang ta* -Set language eg: ta=tamil,en=english
+*Amazon Iphone* -Get results from Amazon
+*Rk* -Try this !
+*Kabali* -Try this!
+*/help* -Show this message
+*exit!* -Killing AutoBot
 """
                                 
 	    elif msgText == 'rk':
 		jid = self.normalizeJid(msgFrom)
 		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
                 self.toLower(entity)
-                print 'Hello Boss'
-                #img = Image.open('rk.jpg')
-                #img.show()
-                #os.system("start C:\Windows\system32\cmd")
+                
                 textMsg = 'Hello Boss.. :)'
                 '''
 	    elif msgText == 'wiki':
@@ -160,7 +157,7 @@ _Hii.. Im AutoBot,Please try below commands_
                     entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
                     self.toLower(entity)
                     
-                    print 'This is Wiki App'
+                    logging.info ('This is Wiki App')
                     try:
                         modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
                     except ValueError:
@@ -178,13 +175,11 @@ _Hii.. Im AutoBot,Please try below commands_
 	    elif msgText == 'kabali':
                 #Generating random Img from Folder 
                 #jid = self.normalizeJid(msgFrom)
-                filec =  r"C:\Users\radhakrishnanr\Desktop\kabali"
                 random_filename = random.choice([
-                    x for x in os.listdir(filec)
-                    if os.path.isfile(os.path.join(filec, x))
+                    x for x in os.listdir(config.media_storage_path)
+                    if os.path.isfile(os.path.join(config.media_storage_path, x))
                 ])
-                
-                path = 'C:/Users/radhakrishnanr/Desktop/kabali/'+random_filename
+                path = config.media_storage_path+random_filename
                 textMsg = 'Uploading kabali Image....'
                 iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                      filePath=path)
@@ -204,7 +199,7 @@ _Hii.. Im AutoBot,Please try below commands_
                      modwiki ='Add a word after Amazon to get details.Ex: Amazon bag'
                      
             elif msgText == '/help':
-                print 'Sending Help Msg..'
+                logging.info ('Sending Help Msg..')
                 textMsg = """ [HELP]
 - Commands
 */help* - Show this message.
@@ -217,7 +212,7 @@ _Hii.. Im AutoBot,Please try below commands_
 *exit!* - killing AutoBot
 """
               
-##                textMsg = ''
+
                      
                      
             elif messageProtocolEntity.getFrom(False) == '918122753538' and msgText == 'exit!':
@@ -227,10 +222,9 @@ _Hii.. Im AutoBot,Please try below commands_
                
             else:
                   
-                  print 'Auto Reply Disabled'
+                  logging.info ('Auto Reply Disabled')
                   msgFrom = 'nomsg'
-##                  textMsg = 'Auto Reply:'+messageProtocolEntity.getBody()
-##                  msgFrom = '91999990099999999999900900'#disable Auto Reply
+
 
             if  msgFrom != 'nomsg':
                 
@@ -241,13 +235,13 @@ _Hii.. Im AutoBot,Please try below commands_
                      
 
                  
-        print("Message:%s|From:%s|Time:%s|" % (msgFrom,
+        logging.info("Message:%s|From:%s|Time:%s|" % (msgFrom,
                                                messageProtocolEntity.getFrom(False),
                                                time.ctime()))
 
         
      elif messageProtocolEntity.getType() == 'media': 
-        print "Media received"
+        logging.warning ("Media received")
         try:
             
             outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Media Not Suppported' + " " +
@@ -255,10 +249,10 @@ _Hii.. Im AutoBot,Please try below commands_
                                                                        to = messageProtocolEntity.getFrom())
             self.toLower(outgoingMessageProtocolEntity)
         except ValueError:
-            print 'audio not supported'
+            logging.exception ('audio not supported')
     
      elif message.getMediaType() == 'ptt': 
-        print "Audio received"
+        logging.info ("Audio received")
         outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'Audio Not Suppported' + " " +
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
@@ -267,7 +261,7 @@ _Hii.. Im AutoBot,Please try below commands_
 
         
      elif messageProtocolEntity.getType() == 'vcard': 
-        print "vcard received"
+        logging.info ("vcard received")
         outgoingMessageProtocolEntity = TextMessageProtocolEntity( 'vcard Not Suppported' + " " +
                                                                        time.ctime(),
                                                                        to = messageProtocolEntity.getFrom())
