@@ -55,7 +55,6 @@ class EchoLayer(YowInterfaceLayer):
 
 
 
-    ##
     def onRequestUploadResult(self, resultRequestUploadIqProtocolEntity, requestUploadIqProtocolEntity, jid, path, oup):
         logging.info("Request ok")
         #duplicate image will provide json data not found Exception error
@@ -133,10 +132,7 @@ _Hii.. Im AutoBot,Please try below commands_
 		jid = self.normalizeJid(msgFrom)
 		entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
                 self.toLower(entity)
-                print 'Hello Boss'
-                #img = Image.open('rk.jpg')
-                #img.show()
-                #os.system("start C:\Windows\system32\cmd")
+                
                 textMsg = 'Hello Boss.. :)'
                 '''
 	    elif msgText == 'wiki':
@@ -179,13 +175,11 @@ _Hii.. Im AutoBot,Please try below commands_
 	    elif msgText == 'kabali':
                 #Generating random Img from Folder 
                 #jid = self.normalizeJid(msgFrom)
-                filec =  r"C:\Users\radhakrishnanr\Desktop\kabali"
                 random_filename = random.choice([
-                    x for x in os.listdir(filec)
-                    if os.path.isfile(os.path.join(filec, x))
+                    x for x in os.listdir(config.media_storage_path)
+                    if os.path.isfile(os.path.join(config.media_storage_path, x))
                 ])
-                
-                path = 'C:/Users/radhakrishnanr/Desktop/kabali/'+random_filename
+                path = config.media_storage_path+random_filename
                 textMsg = 'Uploading kabali Image....'
                 iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                      filePath=path)
