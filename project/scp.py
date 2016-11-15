@@ -97,9 +97,7 @@ def scrape(url):
     
           
      
-if __name__ == "__main__":
-    
-    
+if __name__ == "__main__":  
     search_string = 'toymotor'
     product_list = search(search_string)
     
