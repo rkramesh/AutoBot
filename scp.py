@@ -6,7 +6,6 @@ import sys
 import bs4
 import requests
 import logging
-
 def search(query):
     
     url = 'http://www.amazon.in/s/ref=nb_sb_noss_2?url=search-alias' \
