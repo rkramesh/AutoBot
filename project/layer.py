@@ -123,6 +123,7 @@ _Hii.. Im AutoBot,Please try below commands_
 *wiki set-lang ta* -Set language eg: ta=tamil,en=english
 *Amazon Iphone* -Get results from Amazon
 *Rk* -Try this !
+*gsearch baby* -Get Image
 *Kabali* -Try this!
 */help* -Show this message
 *exit!* -Killing AutoBot
@@ -231,6 +232,7 @@ _Hii.. Im AutoBot,Please try below commands_
 *wiki set-lang ta* - Set Search language for wiki eg: ta=tamil ,en=english
 *Amazon Iphone* - Fetched all displayed Prize and details for product 'Iphone'
 *Rk* - Try this !
+*gsearch baby* -Get Image
 *Kabali* - Just Try typing 'Kabali' and see for yourself!!
 *exit!* - killing AutoBot
 """
