@@ -19,7 +19,7 @@ filter_groups = True
 admins = [os.environ.get('WHATSAPP_ADMIN', defaults['WHATSAPP_ADMIN']), ]
 
 #Overall Admin for Autobot,will be used for security and admin features
-botAdmin = '918122753538'
+botAdmin = 'enter admin no here eg:919884098840'
 
 # Bing API for image search
 bing_api_key = os.environ.get('BING_API_KEY', defaults['WHATSAPP_ADMIN'])
