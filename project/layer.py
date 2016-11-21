@@ -217,7 +217,7 @@ _Hii.. Im AutoBot,Please try below commands_
 
                      
                      
-            elif messageProtocolEntity.getFrom(False) == '918122753538' and msgText == 'exit!':
+            elif messageProtocolEntity.getFrom(False) == 'enteradmin no,eg:919884098840' and msgText == 'exit!':
                  modwiki = 'kiiling bot..'
                  os.kill(ypid, 9)
                 
