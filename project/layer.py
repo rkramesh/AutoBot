@@ -113,43 +113,40 @@ _Hii.. Im AutoBot,Please try below commands_
 */help* -Show this message
 *exit!* -Killing AutoBot
 """
+             
 	    elif msgText == 'rk':
 		jid = self.normalizeJid(msgFrom)
 		self.sendState(jid)
                 textMsg = "Welcome Boss!"
-                '''
-	    elif msgText == 'wiki':
+            elif 'wiki' in msgText:
                 textMsg = 'Wiki Details:'
-                modwiki = 'Add a word after wiki to get details.Eg: wiki eagle'
-                '''
-	    elif 'wiki' in msgText:
-                textMsg = 'Wiki Details:'
-                #wikipedia.set_lang('ta')
-                splitted = msgText.split()
-                if msgText.split(' ')[1] == 'set-lang':         
-                    try:
-                        wikipedia.set_lang(msgText.split(' ')[2])
-                        modwiki = 'Wiki language Changed to '+ msgText.split(' ')[2]
-                    except:
-                        modwiki = 'Unable to Set Language'
-		elif msgText.split(' ')[1] != 'set-lang':
-		    #modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
-                    jid = self.normalizeJid(msgFrom)
-                    self.sendState(jid)
-                    logging.info ('This is Wiki App')
-                    try:
-                        modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
-                    except ValueError:
-                        modwiki = 'Sorry value error Page not Found!..Please try with different search term'
-                    except wikipedia.exceptions.PageError:
-                        modwiki = 'Sorry Page not Found!..Please try with different search term'
-                    except wikipedia.exceptions.DisambiguationError as e:
-                        # print (e.options)# this will print
-                        modwiki = ', '.join(e.options).encode('utf-8')
-                    except:
-                        modwiki = 'Unknown Error Check with Rk'
+                if len(msgText.split()) > 1:
+                    if msgText.split(' ')[1] == 'set-lang':         
+                        try:
+                            wikipedia.set_lang(msgText.split(' ')[2])
+                            modwiki = 'Wiki language Changed to '+ msgText.split(' ')[2]
+                        
+                        except:
+                            modwiki = 'Unable to Set Language'
+                    elif msgText.split(' ')[1] != 'set-lang':
+                        #modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+                        jid = self.normalizeJid(msgFrom)
+                        self.sendState(jid)
+                        logging.info ('This is Wiki App')
+                        try:
+                            modwiki = wikipedia.summary(msgText.split(' ',1)[1]).encode('utf-8')#encoding to avoid unicode error
+                        except ValueError:
+                            modwiki = 'Sorry value error Page not Found!..Please try with different search term'
+                        except wikipedia.exceptions.PageError:
+                            modwiki = 'Sorry Page not Found!..Please try with different search term'
+                        except wikipedia.exceptions.DisambiguationError as e:
+                            # print (e.options)# this will print
+                            modwiki = ', '.join(e.options).encode('utf-8')
+                        except :
+                            modwiki = 'Unknown Error Check with Rk'
                 else:
-                    modwiki ='Add a word after wiki to get details.Ex: wiki cool'
+                         modwiki ='Add a word after wiki to get details.Ex: wiki cool'
+
 	    elif msgText == 'kabali':
                 #Generating random Img from Folder 
                 #jid = self.normalizeJid(msgFrom)
