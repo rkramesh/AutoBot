@@ -13,7 +13,6 @@ import os
 import sys,platform
 import random
 import wikipedia
-import scp,gdown
 ypid= os.getpid()
 import logging,config
 logging.basicConfig(stream=sys.stdout, level=config.logging_level, format=config.log_format)
@@ -167,7 +166,8 @@ _Hii.. Im AutoBot,Please try below commands_
             elif 'gsearch' in msgText:
                 self.sendState(jid)
                 query=msgText.split(' ',1)[1]
-                if gdown.search(query):
+                durl=downloadlink(query,'windows')
+                if durl.gsearch(query):
                     random_filename=query+".jpg"
                     path = random_filename
                     textMsg = 'Uploading '+query+' Image....'
@@ -198,7 +198,9 @@ _Hii.. Im AutoBot,Please try below commands_
                 textMsg = 'Amazon Details:'
                 if len(msgText.split()) > 1:
                     self.sendState(jid)
-                    modwiki = (scp.search(msgText.split(' ',1)[1]))
+                    msg=msgText.split(' ',1)[1]
+                    durl=downloadlink(msg,'windows')
+                    modwiki = (durl.amazon(msg))
                     os.remove('myfile.txt')
                 else:
                      modwiki ='Add a word after Amazon to get details.Ex: Amazon bag'
