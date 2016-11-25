@@ -155,7 +155,7 @@ _Hii.. Im AutoBot,Please try below commands_
                     if os.path.isfile(os.path.join(config.media_storage_path, x))
                 ])
                 path = config.media_storage_path+'/'+random_filename
-                print path
+                
                 textMsg = 'Uploading kabali Image....'
                 iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                      filePath=path)
@@ -169,7 +169,7 @@ _Hii.. Im AutoBot,Please try below commands_
                 durl=downloadlink(query,'windows')
                 if durl.gsearch(query):
                     random_filename=query+".jpg"
-                    path = random_filename
+                    path = config.media_storage_path+'/'+random_filename
                     textMsg = 'Uploading '+query+' Image....'
                     iqEntity = RequestUploadIqProtocolEntity(RequestUploadIqProtocolEntity.MEDIA_TYPE_IMAGE,
                                                          filePath=path)
@@ -201,7 +201,8 @@ _Hii.. Im AutoBot,Please try below commands_
                     msg=msgText.split(' ',1)[1]
                     durl=downloadlink(msg,'windows')
                     modwiki = (durl.amazon(msg))
-                    os.remove('myfile.txt')
+                    os.remove(config.amz_temp)
+                    
                 else:
                      modwiki ='Add a word after Amazon to get details.Ex: Amazon bag'
             elif msgText == '/help':
