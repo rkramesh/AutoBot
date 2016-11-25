@@ -6,10 +6,11 @@ from yowsup.layers.protocol_media.protocolentities import RequestUploadIqProtoco
     ImageDownloadableMediaMessageProtocolEntity
 from yowsup.layers.protocol_chatstate.protocolentities import ChatstateProtocolEntity, OutgoingChatstateProtocolEntity
 from yowsup.layers.protocol_media.mediauploader import MediaUploader
+from dlink import downloadlink 
 from PIL import Image
 import time
 import os
-import sys
+import sys,platform
 import random
 import wikipedia
 import scp,gdown
@@ -178,6 +179,21 @@ _Hii.. Im AutoBot,Please try below commands_
                     self.send
                 else:
                       modwiki='No Image found,Please try with different search term'
+                      
+            elif '/dload' in msgText:
+                textMsg = 'Download Details:'
+                if len(msgText.split()) > 1:
+                    self.sendState(jid)
+                    msg=msgText.split(' ',1)[1]
+                    logging.info(msg)
+                    durl=downloadlink(msg,'windows')
+                    durl.dlink1(msg)
+                    modwiki ='Download details.Ex:completed'
+                    
+                    
+                else:
+                     modwiki ='Download details.Ex: Amazon bag'
+                      
             elif 'amazon' in msgText:
                 textMsg = 'Amazon Details:'
                 if len(msgText.split()) > 1:
