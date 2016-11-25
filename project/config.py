@@ -19,7 +19,7 @@ filter_groups = True
 admins = [os.environ.get('WHATSAPP_ADMIN', defaults['WHATSAPP_ADMIN']), ]
 
 #Overall Admin for Autobot,will be used for security and admin features
-botAdmin = 'enter admin no here eg:919884098840'
+botAdmin = 'Enter admin mobile no'#Eg:919884098840
 
 # Bing API for image search
 bing_api_key = os.environ.get('BING_API_KEY', defaults['WHATSAPP_ADMIN'])
@@ -29,6 +29,7 @@ bing_api_key = os.environ.get('BING_API_KEY', defaults['WHATSAPP_ADMIN'])
 if not os.path.exists('bot-tmp'):
     os.makedirs('bot-tmp')
 media_storage_path = "bot-tmp"
+amz_temp=media_storage_path+'/amz-tmp'#temp file for amazon modules
 
 # Session shelve db path
 session_db_path = r"C:\Users\radhakrishnanr\Desktop\tmp\sessions.db"
