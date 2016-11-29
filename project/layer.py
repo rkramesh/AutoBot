@@ -71,7 +71,7 @@ class EchoLayer(YowInterfaceLayer):
         logging.info("Upload success")
         entity = OutgoingChatstateProtocolEntity(ChatstateProtocolEntity.STATE_TYPING, jid)
         self.toLower(entity)
-	entity = ImageDownloadableMediaMessageProtocolEntity.fromFilePath(filePath, url, None, jid)
+        entity = ImageDownloadableMediaMessageProtocolEntity.fromFilePath(filePath, url, None, jid)
         self.toLower(entity)
     def onUploadError(self, filePath, jid, url):
         logging.info("Upload file failed!")
@@ -189,10 +189,20 @@ _Hii.. Im AutoBot,Please try below commands_
                     durl=downloadlink(msg,'windows')
                     durl.dlink1(msg)
                     modwiki ='Download details.Ex:completed'
-                    
-                    
                 else:
-                     modwiki ='Download details.Ex: Amazon bag'
+                    modwiki ='Download details.Ex: Amazon bag'
+
+            elif messageProtocolEntity.getFrom(False) == config.botAdmin and '/rcomm' in msgText:
+                textMsg = 'Details:'
+                if len(msgText.split()) > 1:
+                    self.sendState(jid)
+                    msg=msgText.split(' ',1)[1]
+                    
+                    durl=downloadlink(msg,'windows')
+                    
+                    modwiki = (durl.runCommand(msg).encode('utf8'))
+                else:
+                     modwiki ='Unknown Command'
                       
             elif 'amazon' in msgText:
                 textMsg = 'Amazon Details:'
@@ -228,7 +238,7 @@ _Hii.. Im AutoBot,Please try below commands_
                   msgFrom = 'nomsg'
             if  msgFrom != 'nomsg':
                 outgoingMessageProtocolEntity = TextMessageProtocolEntity( textMsg + " " +
-                                                                            modwiki,   
+                                                                            str(modwiki),   
                                                                             to = msgFrom)
 	        self.toLower(outgoingMessageProtocolEntity)
         logging.info("Message:%s|From:%s|Time:%s|" % (messageProtocolEntity.getBody().lower().encode('utf8'),
