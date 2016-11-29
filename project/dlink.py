@@ -1,5 +1,5 @@
 ﻿import config
-import os,sys,platform
+import os,sys,platform,subprocess
 import wget,re
 import logging
 import requests,urllib2,bs4
@@ -16,6 +16,25 @@ class downloadlink(object):
      def dlink1(self,msgText):
         if platform.system().lower() == 'windows':
             wget.download(self.msgText)
+        elif platform.system().lower() == 'linux':
+            wget.download(self.msgText)
+
+     def runCommand(self,msgText):
+           if platform.system().lower() == 'windows':
+                try:
+                     data = subprocess.check_output(msgText, shell=True)
+                     return data
+                    
+                except:
+                     data = 'Not a valid Windows Command'
+                     return data
+                     
+           elif platform.system().lower() == 'linux':
+                data = subprocess.check_output(msgText, shell=True)
+                return data
+           else:
+                pass
+          
 
      def gsearch(self,query):
             DIR=config.media_storage_path#downloads the images in the current directory"
@@ -44,6 +63,7 @@ class downloadlink(object):
                 return (query+".jpg")
             else:
                 print 'No Image'
+                
      def amazon(self,query):
         url = 'http://www.amazon.in/s/ref=nb_sb_noss_2?url=search-alias' \
           '%3Daps&field-keywords={}'.format(query.replace(' ', '+'))
