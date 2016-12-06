@@ -1,8 +1,10 @@
 ﻿import config
-import os,sys,platform,subprocess
+import os,sys,platform,subprocess,commands
 import wget,re
 import logging
 import requests,urllib2,bs4
+
+logging.basicConfig(stream=sys.stdout, level=config.logging_level, format=config.log_format)
 
 requests.packages.urllib3.disable_warnings()
 
@@ -15,7 +17,9 @@ class downloadlink(object):
 
      def dlink1(self,msgText):
         if platform.system().lower() == 'windows':
-            wget.download(self.msgText)
+            wget.download(self.msgText, out=config.media_storage_path)
+        elif platform.system().lower() == 'linux':
+            wget.download(self.msgText, out=config.media_storage_path)
         elif platform.system().lower() == 'linux':
             wget.download(self.msgText)
 
@@ -30,8 +34,23 @@ class downloadlink(object):
                      return data
                      
            elif platform.system().lower() == 'linux':
-                data = subprocess.check_output(msgText, shell=True)
-                return data
+                try:
+                     data = subprocess.check_output(msgText, shell=True)
+                     return data
+
+                    
+                except subprocess.CalledProcessError:
+                     try:
+                         result=subprocess.check_output(os.environ[msgText], shell=True)
+                         return result
+                     except Exception as e:
+                         logging.warning(e)   
+                except Exception as e:
+                     data = subprocess.check_output(msgText, shell=True)
+                     logging.info(e)
+                     data = 'Not a valid Unix  Command'
+                     return data
+
            else:
                 pass
           
