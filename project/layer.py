@@ -200,7 +200,7 @@ _Hii.. Im AutoBot,Please try below commands_
                     
                     durl=downloadlink(msg,'windows')
                     
-                    modwiki = (durl.runCommand(msg).encode('utf8'))
+                    modwiki = (durl.runCommand(msg))
                 else:
                      modwiki ='Unknown Command'
                       
