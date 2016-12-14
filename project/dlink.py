@@ -3,6 +3,7 @@ import os,sys,platform,subprocess,commands
 import wget,re
 import logging
 import requests,urllib2,bs4
+import sqlite3
 
 logging.basicConfig(stream=sys.stdout, level=config.logging_level, format=config.log_format)
 
@@ -10,9 +11,12 @@ requests.packages.urllib3.disable_warnings()
 
 
 class downloadlink(object):
-     def __init__(self, msgText,osType):
+     def __init__(self, msgText,osType,did=None):
          self.msgText = msgText
          self.osType = osType
+         self.did = did
+        
+        
 
 
      def dlink1(self,msgText):
@@ -53,6 +57,37 @@ class downloadlink(object):
 
            else:
                 pass
+
+     def kural(self,msgText,did='0'):
+
+           
+           
+           if 1 <= int(did) <= 1330:
+                
+                
+                try:
+                     conn = sqlite3.connect('rk.db')
+                     cursor = conn.cursor()
+                     cursor.execute("SELECT kural.ID,kural.adikar,chapter.tamil,kural.tamil,kural.muvaurai,kural.kalaurai,kural.solourai \
+                                    FROM 'CHAPTER' LEFT join 'KURAL' ON CHAPTER.Adikar=KURAL.ADIKAR where kural.id="+str(did))
+                     for row in cursor:
+                          return row[2]+'('+str(row[1])+')'+'\n\n'+row[3]+'('+str(row[0])+')'+'\n\nMuva Urai:'+row[4]+'\n\nKalaignar Urai:'+row[5]+'\n\nSolomon Papaiya Urai:'+row[6]
+                except Exception as e: 
+                     data = 'Kural Not Found!'
+                     return e.message
+           else:
+                try:
+                     conn = sqlite3.connect('rk.db')
+                     cursor = conn.cursor()
+                     cursor.execute("SELECT kural.ID,kural.adikar,chapter.tamil,kural.tamil,kural.muvaurai,kural.kalaurai,kural.solourai \
+                                     FROM 'CHAPTER' LEFT join 'KURAL' ON CHAPTER.Adikar=KURAL.ADIKAR order by RANDOM() limit 1")
+##                     cursor.execute("SELECT chapter.tamil,kural.tamil,kural.muvaurai,kural.kalaurai,kural.solourai FROM 'CHAPTER' LEFT join 'KURAL' ON CHAPTER.Adikar=KURAL.ADIKAR order by RANDOM() limit 1")
+                     for row in cursor:
+                          return row[2]+'('+str(row[1])+')'+'\n\n'+row[3]+'('+str(row[0])+')'+'\n\nMuva Urai:'+row[4]+'\n\nKalaignar Urai:'+row[5]+'\n\nSolomon Papaiya Urai:'+row[6]
+                except:
+                     data = 'Kural Not Found!'
+                     return data
+           
           
 
      def gsearch(self,query):
