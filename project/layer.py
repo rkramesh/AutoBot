@@ -192,6 +192,33 @@ _Hii.. Im AutoBot,Please try below commands_
                 else:
                     modwiki ='Download details.Ex: Amazon bag'
 
+
+
+            elif '/kural' in msgText:
+                textMsg = 'Download Details:'
+                if len(msgText.split()) > 1 and msgText.split(' ',1)[1].isdigit():
+                    
+                    msg=msgText
+                    durl=downloadlink(msg,'windows')
+                    modwiki = (durl.kural(msg, msgText.split(' ',1)[1]))
+                    print modwiki
+                else:
+                    durl=downloadlink(msgText,'windows')
+                    modwiki = (durl.kural(msgText))
+                    print modwiki  
+                    
+##            elif '/kural' in msgText:
+##                textMsg = 'Download Details:'
+##                if len(msgText.split()) < 1:
+##                    self.sendState(jid)
+##                    msg=msgText
+##                    logging.info(msg)
+##                    durl=downloadlink(msg,'windows')
+##                    durl.kural(msg)
+##                    modwiki = (durl.kural(msg))
+##                else:
+##                    modwiki ='Download details.Ex: Amazon bag'
+
             elif messageProtocolEntity.getFrom(False) == config.botAdmin and '/rcomm' in msgText:
                 textMsg = 'Details:'
                 if len(msgText.split()) > 1:
