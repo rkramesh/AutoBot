@@ -192,15 +192,11 @@ _Hii.. Im AutoBot,Please try below commands_
                 else:
                     modwiki ='Download details.Ex: Amazon bag'
 
-
-
             elif '/kural' in msgText:
-                textMsg = 'Thirkural of the Day :'
+                textMsg = 'Thirkural  of  the  Day:'
                 if len(msgText.split()) > 1 and msgText.split(' ',1)[1].isdigit():
-                    
-                    msg=msgText
-                    durl=downloadlink(msg,'windows')
-                    modwiki = (durl.kural(msg, msgText.split(' ',1)[1]).encode('utf-8'))
+                    durl=downloadlink(msgText,'windows')
+                    modwiki = (durl.kural(msgText, msgText.split(' ',1)[1]).encode('utf-8'))
                     logging.info(modwiki)
                 else:
                     durl=downloadlink(msgText,'windows')
