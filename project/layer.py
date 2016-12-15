@@ -93,7 +93,7 @@ class EchoLayer(YowInterfaceLayer):
         msgFrom = messageProtocolEntity.getFrom()
         msgText = messageProtocolEntity.getBody().lower()
         msgType = messageProtocolEntity.getType()
-	jid = self.normalizeJid(msgFrom)
+        jid = self.normalizeJid(msgFrom)
 	textMsg = ' '
 	modwiki = ' '
         if True:
@@ -195,30 +195,17 @@ _Hii.. Im AutoBot,Please try below commands_
 
 
             elif '/kural' in msgText:
-                textMsg = 'Download Details:'
+                textMsg = 'Thirkural of the Day :'
                 if len(msgText.split()) > 1 and msgText.split(' ',1)[1].isdigit():
                     
                     msg=msgText
                     durl=downloadlink(msg,'windows')
-                    modwiki = (durl.kural(msg, msgText.split(' ',1)[1]))
-                    print modwiki
+                    modwiki = (durl.kural(msg, msgText.split(' ',1)[1]).encode('utf-8'))
+                    logging.info(modwiki)
                 else:
                     durl=downloadlink(msgText,'windows')
-                    modwiki = (durl.kural(msgText))
-                    print modwiki  
-                    
-##            elif '/kural' in msgText:
-##                textMsg = 'Download Details:'
-##                if len(msgText.split()) < 1:
-##                    self.sendState(jid)
-##                    msg=msgText
-##                    logging.info(msg)
-##                    durl=downloadlink(msg,'windows')
-##                    durl.kural(msg)
-##                    modwiki = (durl.kural(msg))
-##                else:
-##                    modwiki ='Download details.Ex: Amazon bag'
-
+                    modwiki = (durl.kural(msgText).encode('utf-8'))
+                    logging.info(modwiki)
             elif messageProtocolEntity.getFrom(False) == config.botAdmin and '/rcomm' in msgText:
                 textMsg = 'Details:'
                 if len(msgText.split()) > 1:
