@@ -10,6 +10,7 @@ from yowsup.layers.network import YowNetworkLayer
 #import logging
 #logging.basicConfig(level=logging.DEBUG)
 
+
 credentials = (phone, pw) # replace with your phone and password
 #CREDENTIALS = DemosArgParser._getCredentials()
 
