@@ -3,7 +3,7 @@ Simple python Script to Send and Receive Meessage in whatsapp with Dictionary am
 
 
 # Usage
-After Completing the Yowsup Installation run the layer.py and start send/receive messages
+After Completing the Yowsup Installation run the run.py and start send/receive messages
 
 
 # How to Use
@@ -61,36 +61,7 @@ compiler=mingw32
 If pycrypto fails to install with some "chmod error". You can install it separately using something like
 ```easy_install http://www.voidspace.org.uk/downloads/pycrypto26/pycrypto-2.6.win32-py2.7.exe```
 
-or for python3 from:
 
- > [https://github.com/axper/python3-pycrypto-windows-installer](https://github.com/axper/python3-pycrypto-windows-installer)
-
-and then rerun the install command again
-
-
-### License:
-MIT License:
-
-The name WhatsApp and the WhatsApp logo are registered trademarks of [WhatsApp Inc](http://www.whatsapp.com).
-
-Yowsup -	Copyright (c) <2012> Tarek Galal <tare2.galal@gmail.com>
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy of this
-	software and associated documentation files (the "Software"), to deal in the Software
-	without restriction, including without limitation the rights to use, copy, modify,
-	merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
-	permit persons to whom the Software is furnished to do so, subject to the following
-	conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-	INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR
-	A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
-	HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
-	CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
-	OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ## Usage
 run the run.py
 eg: python run.py
